@@ -14,12 +14,21 @@ def generateK():
 	"""Génére des clusters aléatoires"""
 	return X[np.random.randint(m, size=nb_clusters), :]
 
-def plotPoints():
+def plotPoints(legend=""):
 	"""Dessine le jeu de donnée en entrée ainsi que les différents clusters"""
+	plt.suptitle(legend)
 	plt.plot(X[:, 0], X[:, 1], 'ro')
 	plt.plot(k[:, 0], k[:, 1], 'bo')
 	plt.axis([-5, 5, -5, 5])
 	plt.show()
+	
+def saveFig(filename, legend):
+	"""Enregistre l'image"""
+	plt.suptitle(legend)
+	plt.plot(X[:, 0], X[:, 1], 'ro')
+	plt.plot(k[:, 0], k[:, 1], 'bo')
+	plt.axis([-5, 5, -5, 5])
+	plt.savefig(filename)
 	
 def getClosest(x):
 	"""Affecte chaque cluster au points qui lui sont le plus proche"""
@@ -58,6 +67,7 @@ c = np.zeros((m, 1), dtype='int64')
 
 
 bestCost = np.inf
+ind = 0
 
 for l in range(10):
 	k = generateK()
@@ -77,11 +87,14 @@ for l in range(10):
 				changed = True
 			k[i] = tmp
 	tmp = costFct(k)
+	saveFig("figure_" + str(l) + ".png", "Fonction objective : " + str(tmp))
 	if(tmp < bestCost):
 		bestK = k
 		bestCost = tmp	
+		ind = l
 
 k = bestK
 np.savetxt("clusters.txt", k)
 print("Best Cost : ", str(bestCost))
+print("Index of best solution : ", str(ind))
 plotPoints()
