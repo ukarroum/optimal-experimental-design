@@ -10,6 +10,9 @@ def load_data(filename):
 	""" Charge les différentes données et les retourne """
 	return np.loadtxt(filename)
 
+def generateData(n, m):
+	return np.random.normal(0, 5, (m, n))
+
 def generateK():
 	"""Génére des clusters aléatoires"""
 	return X[np.random.randint(m, size=nb_clusters), :]
@@ -43,12 +46,12 @@ def getClosest(x):
 def getClosestVect(X):
 	"""Version vectorisée de la fonction getClosest"""
 	return np.argmin(np.linalg.norm(np.tile(X, (nb_clusters, 1, 1)) \
-		- k.reshape((nb_clusters, 1, 2)), keepdims=True, axis=2)\
+		- k.reshape((nb_clusters, 1, np.shape(X)[1])), keepdims=True, axis=2)\
 		, axis=0)
 
 def updateCluster(i):
 	"""Met à jour les clusters"""
-	s = np.array([[0.0, 0.0]])
+	s = np.zeros(np.shape(X)[1])
 	nb = 0
 
 	for j in range(m):
@@ -61,7 +64,8 @@ def costFct(k):
 	"""Fonction objective qui permet de quantifier la qualité d'une solution"""
 	return (1/m)*np.sum(np.linalg.norm(X - np.take(k, c, axis=0)))
 
-X = load_data("MC07_10000.txt")
+#X = load_data("MC07_10000.txt")
+X = generateData(100, 1000)
 m = np.shape(X)[0]
 c = np.zeros((m, 1), dtype='int64')
 
@@ -77,7 +81,7 @@ for l in range(10):
 		changed = False
 	
 		#for i in range(m):
-			#c[i] = getClosest(d[i])
+			#c[i] = getClosest(X[i])
 	
 		c = getClosestVect(X)
 
@@ -87,7 +91,7 @@ for l in range(10):
 				changed = True
 			k[i] = tmp
 	tmp = costFct(k)
-	saveFig("figure_" + str(l) + ".png", "Fonction objective : " + str(tmp))
+	#saveFig("figure_" + str(l) + ".png", "Fonction objective : " + str(tmp))
 	if(tmp < bestCost):
 		bestK = k
 		bestCost = tmp	
@@ -97,4 +101,4 @@ k = bestK
 np.savetxt("clusters.txt", k)
 print("Best Cost : ", str(bestCost))
 print("Index of best solution : ", str(ind))
-plotPoints()
+#plotPoints()
