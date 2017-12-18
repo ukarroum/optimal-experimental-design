@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+from sys import getsizeof
 
-nb_clusters = 25
+nb_clusters = 35
 nb_ite = 10
-threshold = 0.01 #Utilisé dans la condition d'arret
+threshold = 0.1 #Utilisé dans la condition d'arret
 
 def load_data(filename):
 	""" Charge les différentes données et les retourne """
@@ -28,7 +29,7 @@ def plotPoints(legend=""):
 def saveFig(filename, legend):
 	"""Enregistre l'image"""
 	plt.suptitle(legend)
-	plt.plot(X[:, 0], X[:, 1], 'ro')
+	plt.plot(X[:	, 0], X[:, 1], 'ro')
 	plt.plot(k[:, 0], k[:, 1], 'bo')
 	plt.axis([-5, 5, -5, 5])
 	plt.savefig(filename)
@@ -60,13 +61,20 @@ def updateCluster(i):
 			nb += 1
 	return s/nb if nb != 0 else k[i]
 	
-def costFct(k):
+def costFct():
 	"""Fonction objective qui permet de quantifier la qualité d'une solution"""
-	return (1/m)*np.sum(np.linalg.norm(X - np.take(k, c, axis=0)))
+	return (1/m)*np.sum(np.linalg.norm(X - np.take(k, c, axis=0).reshape(m, n)))
 
-#X = load_data("MC07_10000.txt")
-X = generateData(100, 1000)
+def validate():
+	res = np.zeros((2, 2))
+	res[0] = (np.mean(X, axis=0) - np.mean(k, axis=0)) / np.mean(X, axis=0)
+	res[1] = (np.var(X, axis=0) - np.var(k, axis=0)) / np.var(X, axis=0)
+
+	return res
+
+X = load_data("MC07_10000.txt")
 m = np.shape(X)[0]
+n = np.shape(X)[1]
 c = np.zeros((m, 1), dtype='int64')
 
 
@@ -79,10 +87,7 @@ for l in range(10):
 
 	while changed:
 		changed = False
-	
-		#for i in range(m):
-			#c[i] = getClosest(X[i])
-	
+
 		c = getClosestVect(X)
 
 		for i in range(nb_clusters):
@@ -90,9 +95,8 @@ for l in range(10):
 			if(np.linalg.norm(k[i] - tmp) > threshold):
 				changed = True
 			k[i] = tmp
-	tmp = costFct(k)
-	#saveFig("figure_" + str(l) + ".png", "Fonction objective : " + str(tmp))
-	if(tmp < bestCost):
+	tmp = costFct()
+	if tmp < bestCost:
 		bestK = k
 		bestCost = tmp	
 		ind = l
@@ -101,4 +105,5 @@ k = bestK
 np.savetxt("clusters.txt", k)
 print("Best Cost : ", str(bestCost))
 print("Index of best solution : ", str(ind))
-#plotPoints()
+print(validate())
+plotPoints()
