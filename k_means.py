@@ -1,18 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from sys import getsizeof
 
-nb_clusters = 35
-nb_ite = 10
-threshold = 0.1 #Utilisé dans la condition d'arret
+nb_clusters = 200
+nb_ite = 1
+threshold = 0.01 #Utilisé dans la condition d'arret
 
 def load_data(filename):
 	""" Charge les différentes données et les retourne """
 	return np.loadtxt(filename)
 
 def generateData(n, m):
-	return np.random.normal(0, 5, (m, n))
+	return np.random.normal(1, 5, (m, n))
 
 def generateK():
 	"""Génére des clusters aléatoires"""
@@ -39,9 +38,9 @@ def getClosest(x):
 	mini = math.inf
 	ind = 0
 	for i in range(nb_clusters):
-		if(mini > np.linalg.norm(x - k[i])):
+		if mini > np.linalg.norm(x - k[i]):
 			mini = np.linalg.norm(x - k[i])
-			ind = i;
+			ind = i
 	return ind
 
 def getClosestVect(X):
@@ -67,10 +66,14 @@ def costFct():
 
 def validate():
 	res = np.zeros((2, 2))
-	res[0] = (np.mean(X, axis=0) - np.mean(k, axis=0)) / np.mean(X, axis=0)
-	res[1] = (np.var(X, axis=0) - np.var(k, axis=0)) / np.var(X, axis=0)
+
+	unique, counts = np.unique(c, return_counts=True)
+	weighted_k = np.repeat(k, counts, axis=0)
+	res[0] = (np.mean(X, axis=0) - np.mean(weighted_k, axis=0)) / np.mean(X, axis=0)
+	res[1] = (np.var(X, axis=0) - np.var(weighted_k, axis=0)) / np.var(X, axis=0)
 
 	return res
+
 
 X = load_data("MC07_10000.txt")
 m = np.shape(X)[0]
@@ -80,8 +83,10 @@ c = np.zeros((m, 1), dtype='int64')
 
 bestCost = np.inf
 ind = 0
+bestK = 0
+bestC = 0
 
-for l in range(10):
+for l in range(nb_ite):
 	k = generateK()
 	changed = True
 
@@ -92,17 +97,19 @@ for l in range(10):
 
 		for i in range(nb_clusters):
 			tmp = updateCluster(i)
-			if(np.linalg.norm(k[i] - tmp) > threshold):
+			if np.linalg.norm(k[i] - tmp) > threshold:
 				changed = True
 			k[i] = tmp
-	tmp = costFct()
+	tmp = np.sum(np.absolute(validate()))
+	#tmp = costFct()
 	if tmp < bestCost:
 		bestK = k
-		bestCost = tmp	
+		bestCost = tmp
+		bestC = c
 		ind = l
 
 k = bestK
-np.savetxt("clusters.txt", k)
+c = bestC
 print("Best Cost : ", str(bestCost))
 print("Index of best solution : ", str(ind))
 print(validate())
