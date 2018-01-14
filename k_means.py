@@ -1,20 +1,37 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import math
+"""
+			k_means.py
+			==========
 
-nb_clusters = 200
+Implémentation de l'algorithme K-Means dans le cadre du projet de deuxième année à l'ISIMA.
+Cet implémentation prends en compte certaines contraintes dans le projet et a été réalisée
+dans le cadre de MOR (model order reduction)
+
+"""
+
+import matplotlib.pyplot as plt #Utilisée pour l'aiffhage des points
+import numpy as np #Utilisée pour toutes les opérations algebriques
+
+nb_clusters = 25
+
+#nombre d'itérations du script (chaque itération correspand à une execution de k-means à partir d'un ensemble aléatoire
+# de clusters, à la fin le résultat présentant le meilleur coût est séléctionné
 nb_ite = 1
-threshold = 0.01 #Utilisé dans la condition d'arret
+
+#Utilisé dans la condition d'arret
+threshold = 0.01
 
 def load_data(filename):
-	""" Charge les différentes données et les retourne """
+	""" Charge les différentes données depuis le fichier et les retourne
+
+			filename : Fichier contenant les données"""
 	return np.loadtxt(filename)
 
 def generateData(n, m):
+	""" génére une matrice de taille (n x m) de valeurs aléatoires suivant une loi normal d'éspérence 1 et d'écart-type 5"""
 	return np.random.normal(1, 5, (m, n))
 
 def generateK():
-	"""Génére des clusters aléatoires"""
+	"""Génére des clusters aléatoires depuis les points initiaux de X"""
 	return X[np.random.randint(m, size=nb_clusters), :]
 
 def plotPoints(legend=""):
@@ -26,31 +43,23 @@ def plotPoints(legend=""):
 	plt.show()
 	
 def saveFig(filename, legend):
-	"""Enregistre l'image"""
+	"""Enregistre l'image sous le nom filename"""
 	plt.suptitle(legend)
 	plt.plot(X[:	, 0], X[:, 1], 'ro')
 	plt.plot(k[:, 0], k[:, 1], 'bo')
 	plt.axis([-5, 5, -5, 5])
 	plt.savefig(filename)
-	
-def getClosest(x):
-	"""Affecte chaque cluster au points qui lui sont le plus proche"""
-	mini = math.inf
-	ind = 0
-	for i in range(nb_clusters):
-		if mini > np.linalg.norm(x - k[i]):
-			mini = np.linalg.norm(x - k[i])
-			ind = i
-	return ind
 
 def getClosestVect(X):
-	"""Version vectorisée de la fonction getClosest"""
+	"""Retourne un vecteur contenant le cluster le plus proche à chaque point de la matrice X
+
+	Cette version est véctorisé et tourne plus rapidement que la version précédante"""
 	return np.argmin(np.linalg.norm(np.tile(X, (nb_clusters, 1, 1)) \
 		- k.reshape((nb_clusters, 1, np.shape(X)[1])), keepdims=True, axis=2)\
 		, axis=0)
 
 def updateCluster(i):
-	"""Met à jour les clusters"""
+	"""Met à jour le cluster i"""
 	s = np.zeros(np.shape(X)[1])
 	nb = 0
 
@@ -65,6 +74,8 @@ def costFct():
 	return (1/m)*np.sum(np.linalg.norm(X - np.take(k, c, axis=0).reshape(m, n)))
 
 def validate():
+	"""Retourne une matrice contenant la différence de l'éspérence et la variance entre le jeu de donnée initial
+		et les clusters (en prenant en considération leurs poids)."""
 	res = np.zeros((2, 2))
 
 	unique, counts = np.unique(c, return_counts=True)
@@ -101,7 +112,6 @@ for l in range(nb_ite):
 				changed = True
 			k[i] = tmp
 	tmp = np.sum(np.absolute(validate()))
-	#tmp = costFct()
 	if tmp < bestCost:
 		bestK = k
 		bestCost = tmp
@@ -113,4 +123,8 @@ c = bestC
 print("Best Cost : ", str(bestCost))
 print("Index of best solution : ", str(ind))
 print(validate())
+
+np.savetxt("clusters.txt", k)
+np.savetxt("weights.txt", np.unique(c, return_counts=True)[1])
+np.savetxt("errors.txt", validate())
 plotPoints()
