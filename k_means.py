@@ -8,20 +8,22 @@ dans le cadre de MOR (model order reduction)
 
 """
 
-import matplotlib.pyplot as plt #Utilisée pour l'aiffhage des points
-import numpy as np #Utilisée pour toutes les opérations algebriques
+# Utilisée pour l'aiffhage des points
+import matplotlib.pyplot as plt
+# Utilisée pour toutes les opérations algebriques
+import numpy as np
 
 nb_clusters = 25
 
-#nombre d'itérations du script (chaque itération correspand à une execution de k-means à partir d'un ensemble aléatoire
-# de clusters, à la fin le résultat présentant le meilleur coût est séléctionné
+# Nombre d'itérations du script (chaque itération correspand à une execution du k-means à partir d'un solution
+# aléatoire de clusters, à la fin le résultat présentant le meilleur coût est séléctionné
 nb_ite = 1
 
-#Utilisé dans la condition d'arret
+# Utilisé dans la condition d'arret
 threshold = 0.01
 
 def load_data(filename):
-	""" Charge les différentes données depuis le fichier et les retourne
+	""" Charge le jeu de donnée initial depuis le fichier et le retourne
 
 			filename : Fichier contenant les données"""
 	return np.loadtxt(filename)
@@ -35,7 +37,7 @@ def generateK():
 	return X[np.random.randint(m, size=nb_clusters), :]
 
 def plotPoints(legend=""):
-	"""Dessine le jeu de donnée en entrée ainsi que les différents clusters"""
+	"""Dessine le jeu de donnée en entrée (points rouges) ainsi que les différents clusters (points bleus)"""
 	plt.suptitle(legend)
 	plt.plot(X[:, 0], X[:, 1], 'ro')
 	plt.plot(k[:, 0], k[:, 1], 'bo')
@@ -64,13 +66,13 @@ def updateCluster(i):
 	nb = 0
 
 	for j in range(m):
-		if(c[j] == i):
+		if c[j] == i:
 			s += X[j]
 			nb += 1
 	return s/nb if nb != 0 else k[i]
 	
 def costFct():
-	"""Fonction objective qui permet de quantifier la qualité d'une solution"""
+	"""Fonction objective qui permet de quantifier la qualité d'une solution par rapport à une autre"""
 	return (1/m)*np.sum(np.linalg.norm(X - np.take(k, c, axis=0).reshape(m, n)))
 
 def validate():
@@ -86,6 +88,8 @@ def validate():
 	return res
 
 
+# X est la matrice contenant le jeu de donnée initial
+# Elle contient m points, chacun de taille n
 X = load_data("MC07_10000.txt")
 m = np.shape(X)[0]
 n = np.shape(X)[1]

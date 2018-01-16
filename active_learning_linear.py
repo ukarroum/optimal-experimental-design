@@ -1,3 +1,13 @@
+"""
+			active.py
+			==========
+
+Implémentation de l'algorithme K-Means dans le cadre du projet de deuxième année à l'ISIMA.
+Cet implémentation prends en compte certaines contraintes dans le projet et a été réalisée
+dans le cadre de MOR (model order reduction)
+
+"""
+
 import numpy as np
 from sklearn import linear_model
 import random
