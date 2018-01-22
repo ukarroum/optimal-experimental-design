@@ -12,8 +12,9 @@ dans le cadre de MOR (model order reduction)
 import matplotlib.pyplot as plt
 # Utilisée pour toutes les opérations algebriques
 import numpy as np
+import math
 
-nb_clusters = 25
+nb_clusters = 10
 
 # Nombre d'itérations du script (chaque itération correspand à une execution du k-means à partir d'un solution
 # aléatoire de clusters, à la fin le résultat présentant le meilleur coût est séléctionné
@@ -95,7 +96,6 @@ m = np.shape(X)[0]
 n = np.shape(X)[1]
 c = np.zeros((m, 1), dtype='int64')
 
-
 bestCost = np.inf
 ind = 0
 bestK = 0
@@ -121,14 +121,12 @@ for l in range(nb_ite):
 		bestCost = tmp
 		bestC = c
 		ind = l
-
 k = bestK
 c = bestC
-print("Best Cost : ", str(bestCost))
-print("Index of best solution : ", str(ind))
-print(validate())
 
-np.savetxt("clusters.txt", k)
-np.savetxt("weights.txt", np.unique(c, return_counts=True)[1])
-np.savetxt("errors.txt", validate())
-plotPoints()
+unique, counts = np.unique(c, return_counts=True)
+weighted_k = np.repeat(k, counts, axis=0)
+
+print(np.var(np.pi*weighted_k[:, 0]**2*5*24*weighted_k[:, 1]*math.cos(38*math.pi/180)/4))
+print(np.var(np.pi*X[:, 0]**2*5*24*X[:, 1]*math.cos(38*math.pi/180)/4))
+#print(np.var(validations, axis=0))
