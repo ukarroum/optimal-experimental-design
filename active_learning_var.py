@@ -13,11 +13,6 @@ import numpy as np
 from sklearn import linear_model
 import random
 
-def generate_data(n, m):
-	""" Génére des données aléatoires (distrubition normale N(0, 5000))"""
-	return np.random.normal(0, 5000, (n, m))
-
-
 def get_optimal_design_exp(nbExps):
 	""" Retourne les points représantant le plan d'éxpérience optimale """
 	indexs = [np.random.randint(m)]
