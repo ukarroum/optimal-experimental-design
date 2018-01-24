@@ -43,15 +43,15 @@ class OZZDesign:
 			x = np.append(x, self.X[ind, :].reshape(1, np.shape(self.X)[1]), axis=0)
 			A = np.linalg.pinv(np.dot(x.T, x))
 
-		self.Opt = self.X[:, indexs]
+		self.Opt = self.X[indexs, :]
 
 	def getFeatures(self, ord):
 		pows = [list(range(0, ord + 1))]*np.shape(self.X)[1]
 		combins = list(itertools.product(*pows))
 
 		for i in range(len(combins)):
-			if sum(combins[i]) < ord and not all(item == 1 for item in combins):
-				np.append(self.X, np.product(np.power(self.X, combins[i]), axis=1), axis=1)
+			if sum(combins[i]) <= ord and sum(combins[i]) != 1:
+				self.X = np.append(self.X, np.product(np.power(self.X[:, :len(combins[i])], combins[i]), axis=1, keepdims=True), axis=1)
 
 	def saveMor(self, filename):
 		np.savetxt(filename, np.append(self.k, self.weights, axis=1))
@@ -65,20 +65,23 @@ class OZZDesign:
 		self.weights = file[:, np.shape(file)[1] - 2]
 		self.values = file[:, np.shape(file)[1] - 1]
 
-	def readOpt(self, filename):
+	def readOpt(self, filename, ord=1):
 		file = np.loadtxt(filename)
+		self.getFeatures(ord)
 		self.Opt = file[:, :np.shape(file)[1] - 1]
 		self.values = file[:, np.shape(file)[1] - 1]
-		self.theta = linear_model.LinearRegression().fit(self.Opt, self.values).coef_
+
+		self.reg = linear_model.LinearRegression()
+		self.reg.fit(self.Opt, self.values.reshape(25, 1))
 
 	def meanMor(self):
-		return np.mean(np.repeat(self.values, self.weights.reshape(self.nbExp, ), axis=0))
+		return np.mean(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
 
 	def meanOpt(self):
-		return np.mean(np.dot(self.theta, self.X.T).T)
+		return np.mean(self.reg.predict(self.X))
 
 	def varMor(self):
-		return np.var(np.repeat(self.values, self.weights.reshape(self.nbExp, ), axis=0))
+		return np.var(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
 
 	def varOpt(self):
 		return np.var(np.dot(self.theta, self.X.T).T)

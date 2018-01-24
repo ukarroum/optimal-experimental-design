@@ -1,12 +1,24 @@
-import k_means
-import numpy as np
-import math
 from ozzdesign import *
 
 exp = OZZDesign(25, filename="MC07_10000.txt")
 
-exp.getMor()
+# exp.getMor(25)
+#
+# exp.saveMor(filename="clu.txt")
 
-exp.values = (2*exp.k[:, 0] + 4*exp.k[:, 1]).reshape(25, 1)
+# exp.readMor(filename="samples\\exp.txt")
+#
+# print(exp.meanMor())
 
-print(exp.meanMor())
+
+
+#
+# exp.getOptDesign(3)
+#
+# exp.saveOpt(filename="samples\\1_act.txt")
+
+exp.readOpt(filename="samples\\exp.txt", ord=3)
+
+print(exp.meanOpt())
+
+#print(exp.meanMor())
