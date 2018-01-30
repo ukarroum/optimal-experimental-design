@@ -5,11 +5,11 @@ from sklearn import linear_model
 
 
 class OZZDesign:
-	def __init__(self, nbExp, moy=0, std=1, dim=(10, 2), filename=None):
+	def __init__(self, nbExp, np_arr, filename=None, law=None):
 		if filename:
 			self.X = np.loadtxt(filename)
 		else:
-			self.X = np.random.normal(moy, std, dim)
+			self.X = np_arr
 
 		self.nbExp = nbExp
 
