@@ -21,11 +21,11 @@ mean(ref) =
 
 * Ajouter guide pour utilisation
 * AJouter interface MatLab
-* Ajouter d'autres lois (cf NumPy) (surtout une log normal)
+* ~~Ajouter d'autres lois (cf NumPy) (surtout une log normal)~~
 * Choisir automatiquement nombre de clusters
-* AJouter moments d'ordre 3 4
+* ~~AJouter moments d'ordre 3 4~~
 * Ajouter CDF et la PDF
 * Cf bootstraping
 * Regressiin linéaire inverse
-* 10 monte carlo (différents) et comparer clusters (25)
+* ~~10 monte carlo (différents) et comparer clusters (25)~~
 * rapprocher le k-means des points initiaux

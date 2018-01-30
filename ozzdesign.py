@@ -1,8 +1,9 @@
 import numpy as np
 import k_means
 import itertools
-from sklearn import linear_model
+import  sklearn
 import scipy
+
 
 class OZZDesign:
 	def __init__(self, nbExp, np_arr=None, filename=None):
@@ -71,7 +72,7 @@ class OZZDesign:
 		self.Opt = file[:, :np.shape(file)[1] - 1]
 		self.values = file[:, np.shape(file)[1] - 1]
 
-		self.reg = linear_model.LinearRegression()
+		self.reg = sklearn.linear_model.LinearRegression()
 		self.reg.fit(self.Opt, self.values.reshape(25, 1))
 
 	def meanMor(self):
@@ -85,12 +86,6 @@ class OZZDesign:
 
 	def varOpt(self):
 		return np.var(np.dot(self.theta, self.X.T).T)
-
-	def meanMor(self):
-		return np.mean(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
-
-	def meanOpt(self):
-		return np.mean(self.reg.predict(self.X))
 
 	def skewMor(self):
 		return scipy.stats.skew(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
