@@ -2,10 +2,10 @@ import numpy as np
 import k_means
 import itertools
 from sklearn import linear_model
-
+import scipy
 
 class OZZDesign:
-	def __init__(self, nbExp, np_arr, filename=None, law=None):
+	def __init__(self, nbExp, np_arr=None, filename=None):
 		if filename:
 			self.X = np.loadtxt(filename)
 		else:
@@ -85,3 +85,21 @@ class OZZDesign:
 
 	def varOpt(self):
 		return np.var(np.dot(self.theta, self.X.T).T)
+
+	def meanMor(self):
+		return np.mean(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
+
+	def meanOpt(self):
+		return np.mean(self.reg.predict(self.X))
+
+	def skewMor(self):
+		return scipy.stats.skew(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
+
+	def skewOpt(self):
+		return scipy.stats.skew(np.dot(self.theta, self.X.T).T)
+
+	def kurtMor(self):
+		return scipy.stats.kurtosis(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
+
+	def kurtOpt(self):
+		return scipy.stats.kurtosis(np.dot(self.theta, self.X.T).T)
