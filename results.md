@@ -1,20 +1,34 @@
 # Résultats sur des exemples :
 
-## Fonctionnelle.m (fonction initiale):
+## CouplageOLT
 
-mean(ref) = 125.34
-mean(clusters) = 125.315045095
-mean(active_3) = 125.341763011
+nbExps = 25
 
-## App 1
+mean = 1.8217369129999999e-05
+mean(mor) = 1.81763708e-05
+mean(active_1) = 1.80769648999e-05
+mean(active_2) = 1.74578142847e-05
+mean(active_3) = 1.94616482835e-05
 
-mean(ref) = 1.8166e-005
-mean(clusters) = 1.8169426603e-05
-mean(active_3) = 1.81657845957e-05
+var = 1.1918236827750043e-11
+var(mor) = 3.87688885911e-12
+var(active_1) = 1.80769648999e-05
+var(active_2) = 2.66476956694e-12
+var(active_3) = 7.1029615001e-13
 
-Test avec toutes les variables
+skew = 0.46281987943203334
+skew(mor) = -0.10283692505605878
+skew(active_1) = 0.00250502
+skew(active_2) = 0.400934210178
+skew(active_3) = -0.254829719464
 
-mean(ref) =
+
+kurtosis = 0.2912105527353108
+kurtosis(mor) = -0.7346393523390295
+kurtosis(active_1) = -0.00557957
+kurtosis(active_2) = 1.85063124204
+kurtosis(active_3) = 7.55632999431
+
 
 
 ## ToDo

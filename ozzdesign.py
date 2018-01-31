@@ -1,8 +1,8 @@
 import numpy as np
 import k_means
 import itertools
-import  sklearn
-import scipy
+from sklearn import linear_model
+from scipy import stats
 
 
 class OZZDesign:
@@ -27,12 +27,8 @@ class OZZDesign:
 		keep_initial : choisir des points appartenant au plan d'éxpérience initial"""
 		self.k, c = k_means.getClusters(self.X, self.nbExp, nbIte, threeshold)
 
-		# print(np.abs(self.k[0] - self.X).shape)
-		# print(np.argmin(np.abs(self.k[0] - self.X)))
 		if keep_initial:
 			for i in range(np.shape(self.k)[0]):
-				# print(np.abs(np.linalg.norm(self.k[i] - self.X).shape))
-				# print(np.argmin(np.abs(np.linalg.norm(self.k[i] - self.X).shape)))
 				self.k[i] = self.X[np.argmin(np.abs(np.linalg.norm(self.k[i] - self.X, axis=1))), :]
 
 		self.weights = np.unique(c, return_counts=True)[1].reshape(self.nbExp, 1)
@@ -88,7 +84,7 @@ class OZZDesign:
 		self.Opt = file[:, :np.shape(file)[1] - 1]
 		self.values = file[:, np.shape(file)[1] - 1]
 
-		self.reg = sklearn.linear_model.LinearRegression()
+		self.reg = linear_model.LinearRegression()
 		self.reg.fit(self.Opt, self.values.reshape(25, 1))
 
 	def meanMor(self):
@@ -101,17 +97,17 @@ class OZZDesign:
 		return np.var(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
 
 	def varOpt(self):
-		return np.var(np.dot(self.theta, self.X.T).T)
+		return np.var(self.reg.predict(self.X))
 
 	def skewMor(self):
-		return scipy.stats.skew(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
+		return stats.skew(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
 
 	def skewOpt(self):
-		return scipy.stats.skew(np.dot(self.theta, self.X.T).T)
+		return stats.skew(self.reg.predict(self.X))[0]
 
 	def kurtMor(self):
-		return scipy.stats.kurtosis(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
+		return stats.kurtosis(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
 
 	def kurtOpt(self):
-		return scipy.stats.kurtosis(np.dot(self.theta, self.X.T).T)
+		return stats.kurtosis(self.reg.predict(self.X))[0]
 

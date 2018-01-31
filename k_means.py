@@ -71,7 +71,7 @@ def costFct(X, k, c):
 def validate(X, k, c):
 	"""Retourne une matrice contenant la différence de l'éspérence et la variance entre le jeu de donnée initial
 		et les clusters (en prenant en considération leurs poids)."""
-	res = np.zeros((2, 2))
+	res = np.zeros((2, X.shape[1]))
 
 	unique, counts = np.unique(c, return_counts=True)
 	weighted_k = np.repeat(k, counts, axis=0)
