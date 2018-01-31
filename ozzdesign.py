@@ -98,3 +98,4 @@ class OZZDesign:
 
 	def kurtOpt(self):
 		return scipy.stats.kurtosis(np.dot(self.theta, self.X.T).T)
+
