@@ -15,11 +15,11 @@ permet d'utiliser façilement des structures de données NumPy.
 
 ## Dépendances
 
-`
+```
 pip install numpy
 pip install sklearn
 pip install scipy
-`
+```
 
 ## Utilisation
 
@@ -29,7 +29,7 @@ pip install scipy
 
 from ozzdesign import OZZDesign
 
-#Pour générer des données suivants une distribution aléatoire donnée cd plus bas)
+#Pour générer des données suivants une distribution aléatoire donnée cf plus bas)
 
 exp = OZZDesign(filename="MC07_10000.txt", nbExp=25)
 
@@ -62,7 +62,7 @@ Les fonctions sont exactement les mêmes, il suffit de changer *Mor* par *Opt*.
 
 from ozzdesign import OZZDesign
 
-#Pour générer des données suivants une distribution aléatoire donnée cd plus bas)
+#Pour générer des données suivants une distribution aléatoire donnée cf plus bas)
 
 exp = OZZDesign(filename="MC07_10000.txt", nbExp=25)
 
@@ -107,16 +107,12 @@ exp = OZZDesign(np_arr=numpy.random.uniform(1, 5, (10000, 2)), nbExp=25) # Unifo
 
 Vous trouverez la totalité des lois proposées par NumPy ici : [https://docs.scipy.org/doc/numpy/reference/routines.random.html](https://docs.scipy.org/doc/numpy/reference/routines.random.html)
 
-
-
-
-
 ## Contributeurs
 
 * Yassir Karroum [http://ykarroum.com/](http://ykarroum.com/)
 * Imad Enneiymy [https://github.com/maddxyz](https://github.com/maddxyz)
 
-## Encadrants
+## Référants
 
 * Sebastien LALLECHERE
 * Christophe Duhamel [https://www.isima.fr/~duhamel/](https://www.isima.fr/~duhamel/)
