@@ -1,11 +1,11 @@
 from ozzdesign import OZZDesign
 
 
-exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
+exp = OZZDesign(filename="IN11_10000.txt", nbExp="auto", maxExp=50)
 
-exp.getOptDesign(3)
-exp.saveOpt("active.txt")
+exp.getMor()
 
+print(exp.nbExp)
 # exp.readOpt("active_c.txt", ord=3)
 #
 # print(exp.meanOpt())

@@ -2,17 +2,31 @@ import numpy as np
 import k_means
 import itertools
 from sklearn import linear_model
+from sklearn.metrics import silhouette_score
 from scipy import stats
 
 
 class OZZDesign:
-	def __init__(self, nbExp, np_arr=None, filename=None):
+	def __init__(self, nbExp, np_arr=None, filename=None, maxExp=None, minScore=0.9):
+		"""Initialise l'objet ZZDesign
+
+
+		Params :
+
+		nbExp : entier détérminant le nombre d'éxpériences optimals souhaitées ou "auto" pour que ce nombre soit déduit automatiquement
+				Bien entendu l'utilisateur devra toujours spécifier un nombre maximal d'éxpériences à ne pas dépasser
+
+		minScore : Uniquement si nbExp = auto, précise le score silouhaite minimal souhaité."""
 		if filename:
 			self.X = np.loadtxt(filename)
 		else:
 			self.X = np_arr
 
 		self.nbExp = nbExp
+
+		if nbExp == "auto":
+			self.maxExp = maxExp
+			self.minScore = minScore
 
 	def saveAll(self, filename):
 		np.savetxt(filename, self.X)
@@ -25,7 +39,15 @@ class OZZDesign:
 		nbIte : Nombre des itération du k-means
 		threeshold : Utilisé comme condition d'arrêt pour le k-means
 		keep_initial : choisir des points appartenant au plan d'éxpérience initial"""
-		self.k, c = k_means.getClusters(self.X, self.nbExp, nbIte, threeshold)
+
+		if self.nbExp != "auto":
+			self.k, c = k_means.getClusters(self.X, self.nbExp, nbIte, threeshold)
+		else:
+			for i in range(2, self.maxExp):
+				self.k, c = k_means.getClusters(self.X, i, nbIte, threeshold)
+				if silhouette_score(self.X, c.reshape(self.X.shape[0], )) >= self.minScore:
+					self.nbExp = i
+					break
 
 		if keep_initial:
 			for i in range(np.shape(self.k)[0]):
