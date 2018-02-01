@@ -33,6 +33,7 @@ from ozzdesign import OZZDesign
 
 exp = OZZDesign(filename="MC07_10000.txt", nbExp=25)
 
+exp.getMor()
 exp.saveMor(filename="output.txt")
 
 ```
@@ -64,8 +65,11 @@ from ozzdesign import OZZDesign
 
 #Pour générer des données suivants une distribution aléatoire donnée cf plus bas)
 
+# nbExp : Le nombre des expériences optimaux souhaitées
+
 exp = OZZDesign(filename="MC07_10000.txt", nbExp=25)
 
+exp.getOptDesign()
 exp.saveOpt(filename="output.txt")
 
 ```
@@ -107,6 +111,23 @@ exp = OZZDesign(np_arr=numpy.random.uniform(1, 5, (10000, 2)), nbExp=25) # Unifo
 
 Vous trouverez la totalité des lois proposées par NumPy ici : [https://docs.scipy.org/doc/numpy/reference/routines.random.html](https://docs.scipy.org/doc/numpy/reference/routines.random.html)
 
+### Quelques options
+
+```python
+
+# nbIte : lance le k-means 5 fois, la meilleur solution est gardé
+# keep_initial=True : spécifie que les clusters finaux doivent appartenir au plan d'éxpérience initial
+
+exp.getMor(nbIte=5, keep_initial=True)
+
+# ord : l'ordre des variables d'entrèe par exemple si ord = 2 toutes les combinaisons
+#          quadratiques (x, y, xy, x^2, y^2, 1) seront choisises
+#           par défaut le modéle est supposé linéaire
+#           à noter que si ord != 1 vous devrez fournir la même valeur lors de l'appel de la fonction readOpt()
+
+exp.getOptDesign(self, ord=1)
+
+```
 ## Contributeurs
 
 * Yassir Karroum [http://ykarroum.com/](http://ykarroum.com/)
