@@ -45,7 +45,8 @@ class OZZDesign:
 		else:
 			for i in range(2, self.maxExp):
 				self.k, c = k_means.getClusters(self.X, i, nbIte, threeshold)
-				if silhouette_score(self.X, c.reshape(self.X.shape[0], )) >= self.minScore:
+				print(i, " : ", silhouette_score(self.X, c.ravel()))
+				if silhouette_score(self.X, c.ravel()) >= self.minScore:
 					self.nbExp = i
 					break
 

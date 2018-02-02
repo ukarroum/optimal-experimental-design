@@ -63,45 +63,35 @@ nombre clusters =
 ## Résultats de lancement de 10 monte carlo différents 
 
 ```
-mean_1 = 
-mean_1(mor) = 
-diff = 
+mean_1 = 159.2043
+mean_1(mor) = 158.4695387
 
-mean_2 = 
-mean_2(mor) = 
-diff = 
+mean_2 = 158.4441
+mean_2(mor) = 157.7036484
 
-mean_3 = 
-mean_3(mor) = 
-diff = 
+mean_3 = 157.6823
+mean_3(mor) = 156.9453355
 
-mean_4 = 
-mean_4(mor) = 
-diff = 
+mean_4 = 158.7310
+mean_4(mor) = 157.9515142
 
-mean_5 = 
-mean_5(mor) = 
-diff = 
+mean_5 = 157.9431
+mean_5(mor) = 157.0767357
 
-mean_6 = 
-mean_6(mor) = 
-diff = 
+mean_6 = 159.2945
+mean_6(mor) = 158.4241033
 
-mean_7 = 
-mean_7(mor) = 
-diff = 
+mean_7 = 159.3801
+mean_7(mor) = 158.635559
 
-mean_8 = 
-mean_8(mor) = 
-diff = 
+mean_8 = 159.2718
+mean_8(mor) = 158.4799453
 
-mean_9 = 
-mean_9(mor) = 
-diff = 
+mean_9 = 159.0503
+mean_9(mor) = 158.3840955
 
-mean_10 = 
-mean_10(mor) = 
-diff =
+mean_10 = 156.8127
+mean_10(mor) = 156.0987295
 
 ```
 ## ToDo
