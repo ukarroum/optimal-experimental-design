@@ -4,6 +4,7 @@ import itertools
 from sklearn import linear_model
 from sklearn.metrics import silhouette_score
 from scipy import stats
+import matplotlib.pyplot as plt
 
 
 class OZZDesign:
@@ -153,3 +154,15 @@ class OZZDesign:
 				break
 			cum_weight += 1
 		return cum_weight/self.X.shape[0]
+
+	def plotCdfMor(self):
+		sorted_values = sorted(list(zip(self.values, self.weights/self.X.shape[0])))
+		values, weights = list(zip(*sorted_values))
+		plt.plot(values, np.cumsum(weights))
+		plt.show()
+
+	def plotCdfOpt(self):
+		sorted_values = sorted(self.reg.predict(self.X))
+
+		plt.plot(sorted_values, np.cumsum(np.ones(self.X.shape[0])/self.X.shape[0]))
+		plt.show()

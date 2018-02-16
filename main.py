@@ -7,10 +7,13 @@ exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
 
 #exp.getMor()
 
-exp.readOpt("active_c.txt", ord=3)
+#exp.getOptDesign(ord=2)
+#exp.saveOpt("active.txt")
+exp.readOpt("active_c.txt", ord=2)
+
+
 
 print(exp.cdfOpt(1.7984e-05))
 print(exp.cdfOpt(1.7313e-05))
 print(exp.cdfOpt(1.75e-05))
-print(exp.cdfOpt(1.756e-05))
 print(exp.cdfOpt(500))

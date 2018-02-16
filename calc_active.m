@@ -1,4 +1,4 @@
-X = importdata("active.txt");
+X = importdata("..\\active.txt");
 Xp = X(:, 1:11)
 
 for i = 1:25
@@ -6,4 +6,4 @@ for i = 1:25
     y(i, 1) = couplageOLT(line{:});
 end
 
-dlmwrite('active_c.txt', [X y], ' ')
+dlmwrite('..\\active_c.txt', [X y], ' ')

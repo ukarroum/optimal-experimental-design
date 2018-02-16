@@ -19,6 +19,7 @@ permet d'utiliser façilement des structures de données NumPy.
 pip install numpy
 pip install sklearn
 pip install scipy
+pip install matplotlib
 ```
 
 ## Utilisation
@@ -156,6 +157,16 @@ exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
 exp.readMor("clusters_c.txt")
 
 print(exp.cdfMor(1.75e-05)) # Affiche 0.3918
+```
+
+#### Tracer CDF (Fonction de répartition)
+
+```python
+exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
+
+exp.readMor("clusters_c.txt")
+
+exp.plotCdfMor()
 ```
 
 ## Contributeurs

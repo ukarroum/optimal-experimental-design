@@ -15,29 +15,35 @@ ce qui peut vite devenir problèmatique si le nombre d'éxpérience optimal est 
 
 nous obtenons donc : 
 
-nbExp(Mor, 1e-12) = 8
-nbExp(Mor, 1e-13) = 
+    nbExp(Mor, 1e-12) = 8
+    nbExp(Mor, 1e-13) = 
 
 ## CDF (fonction de répartition ) dans le cas discret (MOR)
 
-CDF(0) = 0.0
+    CDF(0) = 0.0
+    
+    CDF(1.7984e-05) = 0.5165
+    CDF(1.7313e-05) = 0.3129
+    CDF(1.75e-05) = 0.3918
+    
+    CDF(500) = 1.0
 
-CDF(1.7984e-05) = 0.5165
-CDF(1.7313e-05) = 0.3129
-CDF(1.75e-05) = 0.3918
+La courbe ressemble à : 
 
-CDF(500) = 1.0
+![Courbe de CDF (MOR)](figures/cdfMor.png)
+## CDF (fonction de répartition ) dans le cas continu (Active Learning) (ordre 2)
 
-## CDF (fonction de répartition ) dans le cas continu (Active Learning) (ordre 3)
+    CDF(0) = 0.0
+    
+    CDF(1.7984e-05) = 0.1954
+    CDF(1.7313e-05) = 0.0984
+    CDF(1.75e-05) = 0.1184
+    
+    CDF(500) = 1.0
 
-CDF(0) = 0.0
+La courbe ressemble à : 
 
-CDF(1.7984e-05) = 
-CDF(1.7313e-05) = 
-CDF(1.75e-05) = 
-
-CDF(500) = 1.0
-
+![Courbe de CDF (Active Learning)](figures/cdfOpt.png)
 ## ToDo
 
 * AJouter interface MatLab (pas prioritaire)
@@ -53,7 +59,7 @@ CDF(500) = 1.0
 * boucler k_means (erreur sur moyenne)
 * plusieurs monte-carlo avec nbExps (model order reduction)
 * k_means with variance
-* tracer cdf
+* ~~tracer cdf~~
 * tracer pdf
 
 l'ecart type sur la moyenne de 100 ou 1000 tirages
