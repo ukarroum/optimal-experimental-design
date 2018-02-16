@@ -32,7 +32,7 @@ class OZZDesign:
 	def saveAll(self, filename):
 		np.savetxt(filename, self.X)
 
-	def getMor(self, nbIte=1, threeshold=0.01, keep_initial=False):
+	def getMor(self, nbIte=1, threeshold=0.01, keep_initial=False, useVar=False):
 		""" Retourne les points du modele réduit :
 
 		Params :
@@ -42,7 +42,7 @@ class OZZDesign:
 		keep_initial : choisir des points appartenant au plan d'éxpérience initial"""
 
 		if self.nbExp != "auto":
-			self.k, c = k_means.getClusters(self.X, self.nbExp, nbIte, threeshold)
+			self.k, c = k_means.getClusters(self.X, self.nbExp, nbIte, threeshold, useVar)
 		else:
 			for i in range(2, self.maxExp):
 				self.k, c = k_means.getClusters(self.X, i, nbIte, threeshold)
@@ -57,6 +57,7 @@ class OZZDesign:
 
 		self.weights = np.unique(c, return_counts=True)[1].reshape(self.nbExp, 1)
 
+		print(np.mean(np.absolute(k_means.validate(self.X, self.k, c)[1])))
 		return self.k, self.weights
 
 	def getOptDesign(self, ord=1):

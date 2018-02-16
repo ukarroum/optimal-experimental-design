@@ -44,6 +44,17 @@ La courbe ressemble à :
 La courbe ressemble à : 
 
 ![Courbe de CDF (Active Learning)](figures/cdfOpt.png)
+
+## K-Means par rapport à la variance
+
+En modifiant l'algorithme k_means afin qu'il essaye d'optimiser la variance on obitnet (sur 25 itérations):
+
+Erreur[var(k_means)] = 0.63659328033
+Erreur[var(k_means non modifié)] = 0.636523373246
+
+à priorie pas vraiment de différences
+
+
 ## ToDo
 
 * AJouter interface MatLab (pas prioritaire)
@@ -58,7 +69,7 @@ La courbe ressemble à :
 * recalculer poids dans mor_rapproché
 * boucler k_means (erreur sur moyenne)
 * plusieurs monte-carlo avec nbExps (model order reduction)
-* k_means with variance
+* ~~k_means with variance~~
 * ~~tracer cdf~~
 * tracer pdf
 

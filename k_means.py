@@ -80,7 +80,7 @@ def validate(X, k, c):
 
 	return res
 
-def getClusters(X, nbClusters=NB_CLUSTERS, nbIte=NB_ITE, threshold=THRESHOLD):
+def getClusters(X, nbClusters=NB_CLUSTERS, nbIte=NB_ITE, threshold=THRESHOLD, useVar=False):
 	"""La fonction principale calcule les clusters pour un jeu de donnée X"""
 	c = np.zeros((np.shape(X)[0], 1), dtype='int64')
 
@@ -106,7 +106,11 @@ def getClusters(X, nbClusters=NB_CLUSTERS, nbIte=NB_ITE, threshold=THRESHOLD):
 				if np.linalg.norm(k[i] - tmp) > THRESHOLD:
 					changed = True
 				k[i] = tmp
-		tmp = np.sum(np.absolute(validate(X, k, c)))
+
+		if useVar:
+			tmp = np.sum(np.absolute(validate(X, k, c)[1]))
+		else:
+			tmp = np.sum(np.absolute(validate(X, k, c)))
 		if tmp < bestCost:
 			bestK = k
 			bestCost = tmp
