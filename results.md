@@ -16,7 +16,7 @@ ce qui peut vite devenir problèmatique si le nombre d'éxpérience optimal est 
 nous obtenons donc : 
 
     nbExp(Mor, 1e-12) = 8
-    nbExp(Mor, 1e-13) = 
+    nbExp(Mor, 1e-13) > 50
 
 ## CDF (fonction de répartition ) dans le cas discret (MOR)
 
