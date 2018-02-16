@@ -127,11 +127,11 @@ exp.getMor(nbIte=5, keep_initial=True)
 
 exp.getOptDesign(self, ord=1)
 
-# Choisir automatiquement le nombre de clusters (ne marche pour le moment que pour le MOR°
+# Choisir automatiquement le nombre de clusters (ne marche pour le moment que pour le MOR)
 # maxExp : Nombre maximal de clusters
-# minScore : Score minimal utilisé comme condition d'arrêt (score sillouhaite utilisé).
+# minScore : Erreur minimal accépté (par rapport aux valeurs d'entré)
 
-exp = OZZDesign(filename="IN11_10000.txt", nbExp="auto", maxExp=50)
+exp = OZZDesign(filename="IN11_10000.txt", nbExp="auto", maxExp=50, minErrMean=1e-13)
 
 ```
 ## Contributeurs

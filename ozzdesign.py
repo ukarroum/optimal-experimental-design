@@ -7,7 +7,7 @@ from scipy import stats
 
 
 class OZZDesign:
-	def __init__(self, nbExp, np_arr=None, filename=None, maxExp=None, minScore=0.9):
+	def __init__(self, nbExp, np_arr=None, filename=None, maxExp=None, minErrMean=0.1):
 		"""Initialise l'objet ZZDesign
 
 
@@ -26,7 +26,7 @@ class OZZDesign:
 
 		if nbExp == "auto":
 			self.maxExp = maxExp
-			self.minScore = minScore
+			self.minErrMean = minErrMean
 
 	def saveAll(self, filename):
 		np.savetxt(filename, self.X)
@@ -45,8 +45,8 @@ class OZZDesign:
 		else:
 			for i in range(2, self.maxExp):
 				self.k, c = k_means.getClusters(self.X, i, nbIte, threeshold)
-				print(i, " : ", silhouette_score(self.X, c.ravel()))
-				if silhouette_score(self.X, c.ravel()) >= self.minScore:
+				print(i)
+				if np.mean(np.abs(k_means.validate(self.X, self.k, c)[0])) <= self.minErrMean:
 					self.nbExp = i
 					break
 
@@ -54,6 +54,7 @@ class OZZDesign:
 			for i in range(np.shape(self.k)[0]):
 				self.k[i] = self.X[np.argmin(np.abs(np.linalg.norm(self.k[i] - self.X, axis=1))), :]
 
+		print(np.mean(np.abs(k_means.validate(self.X, self.k, c)[0])))
 		self.weights = np.unique(c, return_counts=True)[1].reshape(self.nbExp, 1)
 
 		return self.k, self.weights

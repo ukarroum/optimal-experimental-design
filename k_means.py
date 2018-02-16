@@ -23,9 +23,9 @@ NB_ITE = 1
 # Utilisé dans la condition d'arret
 THRESHOLD = 0.01
 
-def generateK(X):
+def generateK(X, nbClusters=NB_CLUSTERS):
 	"""Génére des clusters aléatoires depuis les points initiaux de X"""
-	return X[np.random.randint(np.shape(X)[0], size=NB_CLUSTERS), :]
+	return X[np.random.randint(np.shape(X)[0], size=nbClusters), :]
 
 def plotPoints(X, k, legend=""):
 	"""Dessine le jeu de donnée en entrée (points rouges) ainsi que les différents clusters (points bleus)"""
@@ -47,8 +47,8 @@ def getClosestVect(X, k):
 	"""Retourne un vecteur contenant le cluster le plus proche à chaque point de la matrice X
 
 	Cette version est véctorisé et tourne plus rapidement que la version précédante"""
-	return np.argmin(np.linalg.norm(np.tile(X, (NB_CLUSTERS, 1, 1)) \
-									- k.reshape((NB_CLUSTERS, 1, np.shape(X)[1])), keepdims=True, axis=2)\
+	return np.argmin(np.linalg.norm(np.tile(X, (k.shape[0], 1, 1)) \
+									- k.reshape((k.shape[0], 1, np.shape(X)[1])), keepdims=True, axis=2)\
 		, axis=0)
 
 def updateCluster(X, k, c, i):
@@ -93,7 +93,7 @@ def getClusters(X, nbClusters=NB_CLUSTERS, nbIte=NB_ITE, threshold=THRESHOLD):
 	bestC = 0
 
 	for l in range(NB_ITE):
-		k = generateK(X)
+		k = generateK(X, nbClusters)
 		changed = True
 
 		while changed:

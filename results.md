@@ -1,108 +1,38 @@
-# Résultats sur des exemples :
+# Résultats des tâches fixés lors de notre dérnière réunion
 
-## CouplageOLT
+On tiens à préciser que tous les tests (sauf mention contraire) ont été réalisé sur le jeu de donnée _IN11_10000.txt_
+Correspandant à la fonction _CouplageOLT_
 
-La fonction utilisé est *couplageOLT* (cf samples/couplaeOLT.m), nous avons modifié la fonction afin qu'elle prenne 11 parametres
-au lieu de deux.
+## Choix automatique des clusters
 
-Le jeu de données utilisé est : *IN11_10000.txt* (10.000 variables de taille 11 chacune, généré depuis une distribution gaussiene)
+Le choix automatique des clusters se base sur la moyenne des différences entre la moyenne de X (plan d'éxpérience initial)
+ et de K (clusters en prenant en considération les poids), à noter que cette erreur n'est calculé 
+ que sur les cordonnées d'entrès (et non pas sur la valeur de sortie) ce choix est du au fait que
+baser le calcul sur la valeur de sortie obligera l'utilisateur à founir (et donc éxécuter des éxpériences) nbExpOptimales! fois 
+ce qui peut vite devenir problèmatique si le nombre d'éxpérience optimal est de 25 par exemple.
+ 
+à titre de comparaison voici la moyenne d'erreur pour un `nbExp = 25` : 7.27768095662e-13
 
-Modèles utilisés :
-* mean, var, ... : valeurs des moments d'ordre sur la totalité des données (en gros c'est une sorte de valeur de référence) 
-* MOR : k_means
-* MOR_rapproche : K_means avec des clusters appartenant au plan d'éxpérience initial
-* active_n : Active learning d'ordre n
+nous obtenons donc : 
+
+nbExp(Mor, 1e-12) = 8
+nbExp(Mor, 1e-13) = 
 
 
-```
-nbExps = 25
-```
-
-```
-mean = 1.8217369129999999e-05  
-mean(mor) = 1.81763708e-05  
-mean(mor_rapporche) =  
-mean(active_1) = 1.80769648999e-05  
-mean(active_2) = 1.74578142847e-05  
-mean(active_3) = 1.94616482835e-05  
-```
-
-```
-var = 1.1918236827750043e-11  
-var(mor) = 3.87688885911e-12  
-mean(mor_rapporche) =  
-var(active_1) = 1.80769648999e-05  
-var(active_2) = 2.66476956694e-12  
-var(active_3) = 7.1029615001e-13  
-```
-
-```
-skew = 0.46281987943203334  
-skew(mor) = -0.10283692505605878  
-mean(mor_rapporche) =  
-skew(active_1) = 0.00250502  
-skew(active_2) = 0.400934210178  
-skew(active_3) = -0.254829719464  
-```
-
-```
-kurtosis = 0.2912105527353108  
-kurtosis(mor) = -0.7346393523390295  
-mean(mor_rapporche) =   
-kurtosis(active_1) = -0.00557957  
-kurtosis(active_2) = 1.85063124204  
-kurtosis(active_3) = 7.55632999431  
-```
-
-En lancant une détéction automatique du nombre des clusters on obitient (avec un score minimal de 0.9) :
-
-```
-nombre clusters = 
-```
-
-## Résultats de lancement de 10 monte carlo différents 
-
-```
-mean_1 = 159.2043
-mean_1(mor) = 158.4695387
-
-mean_2 = 158.4441
-mean_2(mor) = 157.7036484
-
-mean_3 = 157.6823
-mean_3(mor) = 156.9453355
-
-mean_4 = 158.7310
-mean_4(mor) = 157.9515142
-
-mean_5 = 157.9431
-mean_5(mor) = 157.0767357
-
-mean_6 = 159.2945
-mean_6(mor) = 158.4241033
-
-mean_7 = 159.3801
-mean_7(mor) = 158.635559
-
-mean_8 = 159.2718
-mean_8(mor) = 158.4799453
-
-mean_9 = 159.0503
-mean_9(mor) = 158.3840955
-
-mean_10 = 156.8127
-mean_10(mor) = 156.0987295
-
-```
 ## ToDo
 
-* ~~Ajouter guide pour utilisation~~
-* AJouter interface MatLab
-* ~~Ajouter d'autres lois (cf NumPy) (surtout une log normal)~~
+* AJouter interface MatLab (pas prioritaire)
 * ~~Choisir automatiquement nombre de clusters~~
-* ~~AJouter moments d'ordre 3 4~~
 * Ajouter CDF et la PDF
 * Cf bootstraping
 * Regressiin linéaire inverse
-* ~~10 monte carlo (différents) et comparer clusters (25)~~
-* ~~rapprocher le k-means des points initiaux~~
+
+
+* cdf continu
+* recalculer poids dans mor_rapproché
+* boucler k_means (erreur sur moyenne)
+* plusieurs monte-carlo avec nbExps (model order reduction)
+* k_means with variance
+* tracer pdf cdf
+
+l'ecart type sur la moyenne de 100 ou 1000 tirages
