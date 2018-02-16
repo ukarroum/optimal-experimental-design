@@ -134,13 +134,22 @@ class OZZDesign:
 	def kurtOpt(self):
 		return stats.kurtosis(self.reg.predict(self.X))[0]
 
-	def cdf(self, value):
+	def cdfMor(self, value):
 		sorted_values = sorted(list(zip(self.values, self.weights)))
 		cum_weight = 0
+
 		for val in sorted_values:
 			if value < val[0]:
-				break;
+				break
 			cum_weight += val[1]
 		return cum_weight/self.X.shape[0]
 
+	def cdfOpt(self, value):
+		sorted_values = sorted(self.reg.predict(self.X))
+		cum_weight = 0
 
+		for val in sorted_values:
+			if value < val:
+				break
+			cum_weight += 1
+		return cum_weight/self.X.shape[0]

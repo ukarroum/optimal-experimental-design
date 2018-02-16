@@ -28,21 +28,32 @@ CDF(1.75e-05) = 0.3918
 
 CDF(500) = 1.0
 
+## CDF (fonction de répartition ) dans le cas continu (Active Learning) (ordre 3)
+
+CDF(0) = 0.0
+
+CDF(1.7984e-05) = 
+CDF(1.7313e-05) = 
+CDF(1.75e-05) = 
+
+CDF(500) = 1.0
+
 ## ToDo
 
 * AJouter interface MatLab (pas prioritaire)
 * ~~Choisir automatiquement nombre de clusters~~
-* Ajouter CDF 
+* ~~Ajouter CDF~~
 * Ajouter la PDF
 * Cf bootstraping
 * Regressiin linéaire inverse
 
 
-* cdf continu
+* ~~cdf continu~~
 * recalculer poids dans mor_rapproché
 * boucler k_means (erreur sur moyenne)
 * plusieurs monte-carlo avec nbExps (model order reduction)
 * k_means with variance
-* tracer pdf cdf
+* tracer cdf
+* tracer pdf
 
 l'ecart type sur la moyenne de 100 ou 1000 tirages

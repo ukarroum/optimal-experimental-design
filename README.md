@@ -155,8 +155,7 @@ exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
 
 exp.readMor("clusters_c.txt")
 
-print(exp.cdf(1.75e-05)) # Affiche 0.3918
-
+print(exp.cdfMor(1.75e-05)) # Affiche 0.3918
 ```
 
 ## Contributeurs
