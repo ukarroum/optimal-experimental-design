@@ -18,12 +18,22 @@ nous obtenons donc :
 nbExp(Mor, 1e-12) = 8
 nbExp(Mor, 1e-13) = 
 
+## CDF (fonction de répartition ) dans le cas discret (MOR)
+
+CDF(0) = 0.0
+
+CDF(1.7984e-05) = 0.5165
+CDF(1.7313e-05) = 0.3129
+CDF(1.75e-05) = 0.3918
+
+CDF(500) = 1.0
 
 ## ToDo
 
 * AJouter interface MatLab (pas prioritaire)
 * ~~Choisir automatiquement nombre de clusters~~
-* Ajouter CDF et la PDF
+* Ajouter CDF 
+* Ajouter la PDF
 * Cf bootstraping
 * Regressiin linéaire inverse
 

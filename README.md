@@ -113,6 +113,8 @@ Vous trouverez la totalité des lois proposées par NumPy ici : [https://docs.sc
 
 ### Quelques options
 
+#### Clusters appartenant au plan d'éxpérience initial
+
 ```python
 
 # nbIte : lance le k-means 5 fois, la meilleur solution est gardé
@@ -120,6 +122,11 @@ Vous trouverez la totalité des lois proposées par NumPy ici : [https://docs.sc
 
 exp.getMor(nbIte=5, keep_initial=True)
 
+```
+
+#### Choix de l'ordre pour l'active learning
+
+```python
 # ord : l'ordre des variables d'entrèe par exemple si ord = 2 toutes les combinaisons
 #          quadratiques (x, y, xy, x^2, y^2, 1) seront choisises
 #           par défaut le modéle est supposé linéaire
@@ -127,6 +134,12 @@ exp.getMor(nbIte=5, keep_initial=True)
 
 exp.getOptDesign(self, ord=1)
 
+
+```
+
+#### Choix automatique du nombre des clusters
+
+```python
 # Choisir automatiquement le nombre de clusters (ne marche pour le moment que pour le MOR)
 # maxExp : Nombre maximal de clusters
 # minScore : Erreur minimal accépté (par rapport aux valeurs d'entré)
@@ -134,6 +147,18 @@ exp.getOptDesign(self, ord=1)
 exp = OZZDesign(filename="IN11_10000.txt", nbExp="auto", maxExp=50, minErrMean=1e-13)
 
 ```
+
+#### CDF (Fonction de répartition)
+
+```python
+exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
+
+exp.readMor("clusters_c.txt")
+
+print(exp.cdf(1.75e-05)) # Affiche 0.3918
+
+```
+
 ## Contributeurs
 
 * Yassir Karroum [http://ykarroum.com/](http://ykarroum.com/)

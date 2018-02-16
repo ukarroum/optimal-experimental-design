@@ -54,7 +54,6 @@ class OZZDesign:
 			for i in range(np.shape(self.k)[0]):
 				self.k[i] = self.X[np.argmin(np.abs(np.linalg.norm(self.k[i] - self.X, axis=1))), :]
 
-		print(np.mean(np.abs(k_means.validate(self.X, self.k, c)[0])))
 		self.weights = np.unique(c, return_counts=True)[1].reshape(self.nbExp, 1)
 
 		return self.k, self.weights
@@ -134,4 +133,14 @@ class OZZDesign:
 
 	def kurtOpt(self):
 		return stats.kurtosis(self.reg.predict(self.X))[0]
+
+	def cdf(self, value):
+		sorted_values = sorted(list(zip(self.values, self.weights)))
+		cum_weight = 0
+		for val in sorted_values:
+			if value < val[0]:
+				break;
+			cum_weight += val[1]
+		return cum_weight/self.X.shape[0]
+
 
