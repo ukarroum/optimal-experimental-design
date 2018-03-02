@@ -243,10 +243,16 @@ exp = OZZDesign(filename="IN_100000.txt", nbExp=25)
 
 exp.readOpt(filename="clusters_c.txt")
 
+# Calcul des moments do'rdre
+
 print("Moment d'ordre 1 : ", exp.meanOpt())
 print("Moment d'ordre 2 : ", exp.varOpt())
 print("Moment d'ordre 3 : ", exp.skewOpt())
 print("Moment d'ordre 4 : ", exp.kurtOpt())
+
+# Affichage de la CDF
+
+exp.plotCdfMor()
 
 ```
 ## Contributeurs
