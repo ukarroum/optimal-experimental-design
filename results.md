@@ -74,3 +74,26 @@ Erreur[var(k_means non modifié)] = 0.636523373246
 * tracer pdf
 
 l'ecart type sur la moyenne de 100 ou 1000 tirages
+superposer fcts de répartition
+
+
+rapport += algos
+rapport += 
+
+envoyer plan rapport
+
+présenter institut pascal (labo)
+présenter contexte
+ajouter diagrammes parler des frequences de réunion
+ajouter bibliographie
+implémentation des différentes taches
+
+mise en forme des résultats physiques
+parler de l'aspect théorique
+partie résultats numériques
+ajouter perspective
+
+chercher une méthode pour illustrer clustering en dimension 10 (ou 4) [theta phi thetae E]
+
+3 4 5 parties
+
