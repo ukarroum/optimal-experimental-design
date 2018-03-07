@@ -1,10 +1,11 @@
-import numpy as np
-import k_means
 import itertools
-from sklearn import linear_model
-from sklearn.metrics import silhouette_score
-from scipy import stats
+
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy import stats
+from sklearn import linear_model
+
+from ozzdesign import k_means
 
 
 class OZZDesign:
