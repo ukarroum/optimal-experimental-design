@@ -5,7 +5,7 @@ import numpy as np
 from scipy import stats
 from sklearn import linear_model
 
-from ozzdesign import k_means
+import k_means
 
 
 class OZZDesign:
@@ -97,6 +97,9 @@ class OZZDesign:
 
 	def saveOpt(self, filename):
 		np.savetxt(filename, self.Opt)
+
+	def exportOpt(self, filename):
+		np.savetxt(filename, self.reg.coef_)
 
 	def readMor(self, filename):
 		file = np.loadtxt(filename)

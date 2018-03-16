@@ -92,6 +92,24 @@ print("Moment d'ordre 4 : ", exp.kurtOpt())
 
 ```
 
+### Exporter le modèle de la fonction
+
+Vous pouvez également exporter les coefficients de la fonction (afin de pouvoi l'utiliser sous d'autres technologies ) :
+
+```python
+
+from ozzdesign import OZZDesign
+
+exp = OZZDesign(filename="IN11_10000.txt", nbExp=25)
+
+# Lecture du fichier cotnenant la valeur de la fonctionnel pour les points choisis
+exp.readOpt(filename="active.txt", ord=2)
+
+# Exporte les coefficients vers un fichier coefs.txt
+exp.exportOpt(filename="coefs.txt")
+
+```
+
 ### Utiliser d'autres distributions
 
 *OZZDesign* permet de fournir un tableau numpy comme jeu de donnée initial, NumPy permet de générer des données aléatoires suivants une loi.
