@@ -1,3 +1,5 @@
+%% Copyright : Sebastien LALLECHERE
+
 function [Iabs]=couplageOLT(p_E,x,y,p_thetae,p_freq,p_h,p_d,p_L,p_Z0,p_ZL,p_alpha)
 %% x==theta
 %% y==phi
