@@ -1,4 +1,5 @@
 import itertools
+import math
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -114,13 +115,35 @@ class OZZDesign:
 		self.values = file[:, np.shape(file)[1] - 1]
 
 		self.reg = linear_model.LinearRegression()
-		self.reg.fit(self.Opt, self.values.reshape(25, 1))
+		self.reg.fit(self.Opt, self.values.reshape(self.nbExp, 1))
+
+	def readMultOpt(self, filename, ord=1):
+
+		file = np.loadtxt(filename)
+		self.getFeatures(ord)
+
+		self.Opt = file[:, :np.shape(self.X)[1]]
+		self.values = file[:, np.shape(self.X)[1]:]
+
+		self.reg = []
+
+		for i in range(np.shape(self.values)[1]):
+			self.reg.append(linear_model.LinearRegression())
+			self.reg[i].fit(self.Opt, self.values[:,i].reshape(self.nbExp, 1))
 
 	def meanMor(self):
 		return np.mean(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
 
 	def meanOpt(self):
 		return np.mean(self.reg.predict(self.X))
+
+	def saveMultOpt(self, filename):
+		means = []
+
+		for i in range(len(self.reg)):
+			means.append(np.mean(self.reg[i].predict(self.X)))
+
+		np.savetxt(filename, means)
 
 	def varMor(self):
 		return np.var(np.repeat(self.values, self.weights.reshape(self.nbExp, ).astype(int), axis=0))
